@@ -1,19 +1,13 @@
-import { useEffect, useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
 import './App.css';
+import { Pagination } from 'swiper';
 import dummyDatas from './dummyDatas.js';
+import { useEffect, useState } from 'react';
 
 function App() {
   const [totalPagesNums, setTotalPagesNums] = useState([]);
-  const [chosenPosts, setChosenPosts] = useState([]);
-  const [chosenPageNum, setChosenPageNum] = useState(1);
-
-  // for (let i = 1; i <= Math.ceil(dummyDatas.length / 4); i++) {
-  //   console.log(i);
-  //   // prettier-ignore
-  //   for (let j = (i * 4) - 4; j <= (i * 4) - 1; j++) {
-  //     console.log(dummyDatas[j]);
-  //   }
-  // }
 
   useEffect(() => {
     const getPosts = () => {
@@ -27,36 +21,37 @@ function App() {
     getPosts();
   }, [dummyDatas]);
 
-  useEffect(() => {
-    let postsArray = [];
-    for (let i = chosenPageNum * 4 - 4; i <= chosenPageNum * 4 - 1; i++) {
-      postsArray.push(dummyDatas[i]);
-      setChosenPosts(postsArray);
-    }
-  }, [chosenPageNum]);
+  console.log(totalPagesNums);
 
-  console.log(chosenPosts);
+  const pagination = {
+    clickable: true,
+    renderBullet: function (index, className) {
+      return '<span class="' + className + '">' + (index + 1) + '</span>';
+    },
+  };
 
   return (
     <div className='App'>
-      <div className='titlePageNumWrapper'>
-        {chosenPosts.map((post) => {
-          return <div className='title'>{post.title}</div>;
-        })}
-
-        <div className='pagenationNumWrapper'>
-          {totalPagesNums.map((num) => {
-            return (
-              <span
-                className='pagenationNum'
-                onClick={(e) => setChosenPageNum(e.target.innerText)}
-              >
-                {num}
-              </span>
-            );
-          })}
-        </div>
-      </div>
+      <Swiper
+        pagination={pagination}
+        modules={[Pagination]}
+        className='mySwiper'
+      >
+        {totalPagesNums.map((num) => (
+          <SwiperSlide>
+            <div className='page'>
+              {/* prettier-ignore */}
+              <div>{dummyDatas[(num * 4) - 4] ? dummyDatas[(num * 4) - 4].title : null}</div>
+              {/* prettier-ignore */}
+              <div>{dummyDatas[(num * 4) - 3] ? dummyDatas[(num * 4) - 3].title : null}</div>
+              {/* prettier-ignore */}
+              <div>{dummyDatas[(num * 4) - 2] ? dummyDatas[(num * 4) - 2].title : null}</div>
+              {/* prettier-ignore */}
+              <div>{dummyDatas[(num * 4) - 1] ? dummyDatas[(num * 4) - 1].title : null}</div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 }
