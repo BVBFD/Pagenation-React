@@ -67,10 +67,39 @@ body {
 
 .swiper-pagination-bullet-active {
   color: #fff;
-  background: #007aff;
+  background: #96c9ff;
 }
 
 .page div {
     margin-bottom: 3rem;
     font-size: 2rem;
+}
+
+.mySwiper {
+  position: relative;
+}
+
+.navigationButton {
+  width: 1.2rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #ff81ab;
+  color: white;
+  position: absolute;
+  bottom: 0.7rem;
+  z-index: 1111;
+  cursor: pointer;
+}
+
+.prevBtn {
+  left: 41%;
+}
+
+.nextBtn {
+  right: 41%;
 }
